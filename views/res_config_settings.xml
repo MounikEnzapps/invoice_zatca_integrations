@@ -1,0 +1,50 @@
+<odoo>
+    <record model="ir.ui.view" id="res_config_settings_view_form">
+        <field name="name">res.config.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="100"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="ZATCA" string="ZATCA"
+                     data-key="ZATCA">
+                    <h2>ZATCA</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-12 o_setting_box">
+                            <group>
+                                <group>
+                                    <field name="csr_common_name"/>
+                                    <field name="csr_serial_number"/>
+                                    <field name="csr_organization_identifier"/>
+                                    <field name="csr_organization_unit_name"/>
+                                    <field name="csr_organization_name"/>
+                                </group>
+                                <group>
+                                    <field name="csr_country_name"/>
+                                    <field name="csr_invoice_type"/>
+                                    <field name="csr_location_address"/>
+                                    <field name="csr_public_key"/>
+                                    <field name="csr_industry_business_category"/>
+                                    <field name="csr_otp"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="csr_certificate"/>
+                            </group>
+                            <group col="3">
+                                <button name="generate_zatca_certificate"
+                                        string="Generate Certificate &amp; Sandbox Credentials" type="object"
+                                        class="btn-primary"/>
+                                <button name="production_credentials" string="Get Production Credentials" type="object"
+                                        class="btn-primary"/>
+                                <button name="production_credentials_renew" string="Renew Production Credentials"
+                                        type="object"
+                                        class="btn-primary"/>
+                            </group>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

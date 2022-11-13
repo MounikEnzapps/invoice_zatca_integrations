@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="OrderReceipt">
+<!--        <t t-jquery="t[t-if='!isTaxIncluded']" t-operation="replace"/>-->
+        <t t-jquery="t[t-if='!taxincluded']" t-operation="replace"/>
+        <t t-jquery="t[t-if='taxincluded']" t-operation="replace"/>
+<!--        <t t-jquery="t[t-if='receipt.total_discount']" t-operation="replace"/>-->
+<!--        <t t-jquery="t[t-if='isTaxIncluded']" t-operation="replace"/>-->
+        <t t-jquery="div.pos-receipt-amount" t-operation="replace"/>
+        <t t-jquery="div.pos-receipt-right-align" t-operation="replace"/>
+        <t t-jquery="t[t-foreach='paymentlines']" t-operation="replace"/>
+<!--        <t t-jquery="div.pos-receipt-amount receipt-change" t-operation="replace"/>-->
+        <t t-jquery="t[t-if='receipt.total_discount']" t-operation="replace"/>
+<!--        <t t-jquery="t[t-if='taxincluded']" t-operation="replace"/>-->
+        <t t-jquery="div.before-footer" t-operation="replace"/>
+<!--        <t t-jquery="t[t-if='receipt.footer_html']" t-operation="replace"/>-->
+<!--        <t t-jquery="t[t-if='!receipt.footer_html and receipt.footer']" t-operation="replace"/>-->
+        <t t-jquery="div.after-footer" t-operation="replace"/>
+        <t t-jquery="div.pos-receipt-order-data" t-operation="replace"/>
+<!--        <t t-jquery="div.pos-receipt-change" t-operation="replace"/>-->
+
+        <t t-jquery="div.pos-receipt-contact" t-operation="replace">
+            <div class="pos-receipt-contact">
+                <t t-if="receipt.company.contact_address">
+                    <div><strong><t t-esc="receipt.company.contact_address"/></strong></div>
+                </t>
+                <t t-if="pos.company.street"><span t-esc="pos.company.street"/>,
+                </t>
+                <t t-if="pos.company.street2"><span t-esc="pos.company.street2"/>,
+                </t>
+                <t t-if="pos.company.city"><span t-esc="pos.company.city"/>,
+                </t>
+                <t t-if="pos.company.state_id"><span t-esc="pos.company.state_id"/>.
+                </t>
+                <br/>
+                <t t-if="pos.company.phone"><span t-esc="pos.company.phone"/></t>
+                <t t-if="pos.company.name_arabic">
+                    <div style="font-size:18pt;font-weight:bold">
+                        <span t-esc="widget.name_arabic" style="text-size:12pt"/>
+                        <br/>
+                    </div>
+                </t>
+                <div class="cashier" t-if="receipt.cashier">
+                    <div>--------------------------------</div>
+                    <div>Served by <t t-esc="receipt.cashier" /></div>
+                </div>
+
+                <table style="margin-top:5pt;padding:5pt; border-bottom:1pt dashed black;" t-if="receipt.company.vat">
+                    <colgroup>
+                        <col width='24%'/>
+                        <col width='1%'/>
+                        <col width='49%'/>
+                        <col width='1%'/>
+                        <col width='25%'/>
+                    </colgroup>
+                    <tr>
+                        <td style="vertical-align:bottom;">
+                            VAT Reg. No
+                        </td>
+                        <td style="vertical-align:bottom;padding-left:3pt">:</td>
+                        <td style="text-align:center;vertical-align:bottom;padding-right:5pt">
+                            <t t-esc="receipt.company.vat" style="text-align:center"/>
+                        </td>
+                        <td style="vertical-align:bottom;padding-right:3pt">:</td>
+                        <td style="text-align:right;vertical-align:bottom;text-size:7pt">
+                            رقم الضريبي
+                        </td>
+                    </tr>
+                </table>
+
+                <t t-if="receipt.header">
+                    <div style='text-align:center;padding-top:5pt'>
+                        <t t-esc="receipt.header"/>
+                    </div>
+                    <br/>
+                </t>
+                <div style="font-weight:bold;padding-bottom:5pt;padding-top:4pt; border-bottom:1pt dashed black;">INVOICE فاتورة</div>
+            </div>
+<!--        </xpath>-->
+       </t>
+
+        <t t-jquery="div.orderlines" t-operation="replace">
+            <div class="orderlines">
+                <table style="margin-top:-20pt;padding:5pt;font-size:9pt;border-bottom:1pt dashed black;">
+                    <colgroup>
+                        <col width='24%'/>
+                        <col width='1%'/>
+                        <col width='49%'/>
+                        <col width='1%'/>
+                        <col width='25%'/>
+                    </colgroup>
+                    <tr>
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt">Date</td>
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt;padding-left:3pt">:</td>
+                        <td style="vertical-align:bottom;text-align:center;padding-top:5pt;padding-bottom:3pt;padding-right:3pt">
+                            <t t-esc="receipt.date.localestring"/>
+                        </td>
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt">:</td>
+                        <td style="text-align:right;vertical-align:bottom;text-size:7pt;padding-top:3pt;padding-bottom:3pt;padding-right:3pt">
+                            التاريخ
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:bottom;padding-bottom: 3pt;">
+                            Invoice No
+                        </td>
+                        <td style="vertical-align:bottom;padding-left:3pt;padding-bottom: 3pt;">:</td>
+                        <td style="text-align:center;vertical-align:bottom;padding-right:5pt;padding-bottom: 3pt;">
+                            <t t-esc="receipt.name.replace('Order ','')"/>
+                        </td>
+                        <td style="vertical-align:bottom;padding-right:3pt;padding-bottom: 3pt;">:</td>
+                        <td style="text-align:right;vertical-align:bottom;text-size:7pt;padding-bottom: 3pt;">
+                            رقم الفاتورة
+                        </td>
+                    </tr>
+                    <tr t-if="pos.get_client()">
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt">Customer</td>
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt;padding-left:3pt">:</td>
+                        <td style="text-align:center;vertical-align:bottom;padding-right:5pt;padding-top:3pt;padding-bottom:3pt">
+                            <t t-esc="pos.get_client().name"/>
+                        </td>
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt;padding-right:3pt">:</td>
+                        <td style="text-align:right;vertical-align:bottom;text-size:7pt;padding-top:3pt;padding-bottom:3pt">
+                            اسم العميل
+                        </td>
+                    </tr>
+                    <tr t-if="pos.get_client() &amp;&amp; pos.get_client().mobile">
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt">Mobile</td>
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt;padding-left:3pt">:</td>
+                        <td style="text-align:center;vertical-align:bottom;padding-right:5pt;padding-top:3pt;padding-bottom:3pt">
+                            <t t-esc="pos.get_client().mobile"/>
+                        </td>
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt;padding-right:3pt">:</td>
+                        <td style="text-align:right;vertical-align:bottom;text-size:7pt;padding-top:3pt;padding-bottom:3pt">
+                            الجوال
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt">Sales Person</td>
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt;padding-left:3pt">:</td>
+                        <td style="text-align:center;vertical-align:bottom;padding-right:5pt;padding-top:3pt;padding-bottom:3pt">
+                            <t t-esc="pos.get_cashier().name"/>
+                        </td>
+                        <td style="vertical-align:bottom;padding-top:3pt;padding-bottom:3pt;padding-right:3pt">:</td>
+                        <td style="text-align:right;vertical-align:bottom;text-size:7pt;padding-top:3pt;padding-bottom:3pt">
+                            مندوب مبيعات
+                        </td>
+                    </tr>
+                </table>
+                <table style="margin-top:5pt;padding:5pt;border-bottom:1pt dashed black;font-size:9pt;width:100%;" class='receipt-orderlines'>
+                     <colgroup>
+                        <col width='22%'/>
+                        <col width='21%'/>
+                        <col width='12%'/>
+                        <col width='45%'/>
+                    </colgroup>
+                    <tr>
+                        <th style="border-bottom:1pt dashed black;vertical-align:bottom; margin-bottom:5pt;padding-bottom:3pt;">
+                            الاجمالي<br/>Total
+                        </th>
+                        <th style="border-bottom:1pt dashed black;vertical-align:bottom;text-align:right;margin-bottom:5pt;padding-bottom:3pt">
+                            السعر<br/>PRICE
+                        </th>
+                        <th style="border-bottom:1pt dashed black;vertical-align:bottom;text-align:right;margin-bottom:5pt;padding-bottom:3pt">
+                            الكمية<br/>QTY
+                        </th>
+                        <th style="border-bottom:1pt dashed black;vertical-align:bottom;text-align:right;margin-bottom:5pt;padding-bottom:3pt">
+                            الوصف<br/>Description
+                        </th>
+                    </tr>
+                    <t t-foreach="orderlines" t-as="orderline" style="margin-top:5pt">
+                        <tr>
+                        <td style="padding-bottom:3pt;padding-top:2pt;vertical-align:top">
+                            <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                        </td>
+                        <td style="padding-bottom:3pt;padding-top:2pt;vertical-align:top" class="pos-right-align">
+                            <t t-esc="widget.format_currency(orderline.price)"/>
+                        </td>
+                        <td style="padding-bottom:3pt;padding-top:2pt;vertical-align:top" class="pos-right-align">
+                            <t t-esc="orderline.get_quantity_str_with_unit()"/>
+                        </td>
+                        <td style="text-align:right;padding-bottom:3pt;padding-top:2pt;vertical-align:top">
+                            <t t-esc="orderline.get_product().display_name"/>
+                            <t t-if="orderline.get_product().name_arabic">
+                                <br/>
+                                <t t-esc="orderline.get_product().name_arabic"/>
+                            </t>
+                            <t t-if="orderline.get_discount() > 0">
+                                <div class="pos-disc-font">
+                                    With a <t t-esc="orderline.get_discount()"/>% discount
+                                </div>
+                            </t>
+                        </td>
+                        </tr>
+                        <tr t-if="orderline.product.barcode">
+                            <td colspan="3"></td>
+                            <td colspan="1" style="display: flex;direction: rtl;"><t t-esc="orderline.product.barcode"/></td>
+                        </tr>
+                    </t>
+                </table>
+                <table style="border-bottom:1pt dashed black;font-size:10pt; font-weight:bold;" class='receipt-total'>
+                    <colgroup>
+                        <col width='24%'/>
+                        <col width='1%'/>
+                        <col width='56%'/>
+                        <col width='1%'/>
+                        <col width='18%'/>
+                    </colgroup>
+                    <tr>
+                        <td style="padding-bottom:5pt;padding-top:5pt">TOTAL</td>
+                        <td style="padding-bottom:5pt;padding-top:5pt">:</td>
+                        <td style="text-align:center;padding-bottom:5pt;padding-top:5pt;padding-right:6pt">
+                            <t t-esc="widget.format_currency(receipt.subtotal)"/>
+                        </td>
+                        <td style="padding-bottom:5pt;padding-top:5pt">:</td>
+                        <td style="text-align:right;padding-bottom:5pt;padding-top:5pt">الاجمالي</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5pt;padding-top:5pt">VAT</td>
+                        <td style="padding-bottom:5pt;padding-top:5pt">:</td>
+                        <td style="text-align:center;padding-bottom:5pt;padding-top:5pt;padding-right:6pt">
+                            <span t-esc='widget.format_currency(receipt.total_tax)'/>
+                        </td>
+                        <td style="padding-bottom:5pt;padding-top:5pt">:</td>
+                        <td style="text-align:right;padding-bottom:5pt;padding-top:5pt">قيمة الضريبة</td>
+                    </tr>
+<!--                    <t t-foreach="receipt.tax_details" t-as="taxdetail">-->
+<!--                        <tr>-->
+<!--                            <td style="padding-bottom:5pt;padding-top:5pt">-->
+<!--                                <t t-esc="taxdetail.name"/>-->
+<!--                            </td>-->
+<!--                            <td style="padding-bottom:5pt;padding-top:5pt">:</td>-->
+<!--                            <td style="text-align:center;padding-bottom:5pt;padding-top:5pt;padding-right:6pt">-->
+<!--                                <t t-esc="widget.format_currency(taxdetail.amount)"/>-->
+<!--                            </td>-->
+<!--                            <td style="padding-bottom:5pt;padding-top:5pt">:</td>-->
+<!--                            <td style="text-align:right;padding-bottom:5pt;padding-top:5pt">ضريبة</td>-->
+<!--                        </tr>-->
+<!--                    </t>-->
+                    <tr>
+                        <t t-if="receipt.total_discount">
+                            <td>Discount</td>
+                            <td>:</td>
+                            <td style="text-align:center;padding-bottom:5pt;padding-top:5pt;padding-right:6pt">
+                                <span  t-esc="widget.format_currency(receipt.total_discount)" class="pos-receipt-center-align"/>
+                            </td>
+                            <td>:</td>
+                            <td style="text-align:right">خصم</td>
+                        </t>
+                    </tr>
+                    <tr style="border-bottom:1pt dashed black">
+                        <td style="padding-bottom:5pt;">NET AMOUNT</td>
+                        <td style="padding-bottom:5pt">:</td>
+                        <td style="text-align:center;padding-bottom:5pt;padding-top:5pt;padding-right:6pt">
+                            <t t-esc="widget.format_currency(receipt.total_with_tax)"/>
+                        </td>
+                        <td style="padding-bottom:5pt">:</td>
+                        <td style="text-align:right;padding-bottom:5pt">الاجمالي شامل الضريبة</td>
+                    </tr>
+
+                    <t t-foreach="paymentlines" t-as="line">
+                        <tr>
+                            <td style="vertical-align:bottom">
+
+                                <t t-if="line.name == 'cash'">
+                                        Cash
+                                </t>
+                                <t t-else="" t-esc="line.name"/>
+                            </td>
+                            <td style="vertical-align:bottom">:</td>
+                            <td style="vertical-align:bottom;padding-right:6pt" class="pos-center-align">
+                                <t t-esc="widget.format_currency(line.get_amount())"/>
+                            </td>
+                            <td style="vertical-align:bottom">:</td>
+                            <td style="text-align:right;vertical-align:bottom">نقدا</td>
+                        </tr>
+                    </t>
+                    <tr>
+                        <td style="padding-bottom:5pt;">Amount Due</td>
+                        <td style="padding-bottom:5pt">:</td>
+                        <td style="text-align:center;padding-bottom:5pt;padding-top:5pt;padding-right:6pt">
+                            <t t-esc="widget.format_currency(order.get_due())"/>
+                        </td>
+                        <td style="padding-bottom:5pt">:</td>
+                        <td style="text-align:right;padding-bottom:5pt">المبلغ المتبقي</td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-bottom:5pt">Change</td>
+                        <td style="padding-bottom:5pt">:</td>
+                        <td style="padding-bottom:5pt;padding-right:6pt" class="pos-center-align">
+                            <t t-esc="widget.format_currency(order.get_change())"/>
+                        </td>
+                        <td style="padding-bottom:5pt">:</td>
+                        <td style="padding-bottom:5pt;text-align:right">الباقي</td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <div id="dynamic_qr_code"></div>
+            </div>
+        </t>
+
+        <t t-jquery='.receipt-orderlines' t-operation='before'>
+            <script type="text/javascript">
+<!--            var qrcode = new QRCode( ID , {    -->
+                var qrcode = new QRCode('dynamic_qr_code' , {
+                    width: 200,
+                    height: 200,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+                function lengthInUtf8Bytes(str) {
+                  // Matches only the 10.. bytes that are non-initial characters in a multi-byte sequence.
+                  var m = encodeURIComponent(str).match(/%[89ABab]/g);
+                  return str.length + (m ? m.length : 0);
+                }
+                qrcode.makeCode(Base64.encode('\x01' + String.fromCharCode(Number.parseInt((+lengthInUtf8Bytes('<t t-esc="receipt.company.name"/>').toString()).toString(16), 16)) + '<t t-esc="receipt.company.name"/>' +
+                                              '\x02' + String.fromCharCode(Number.parseInt((+lengthInUtf8Bytes('<t t-if="receipt.company.vat" t-esc="receipt.company.vat"/>').toString()).toString(16), 16)) + '<t t-if="receipt.company.vat" t-esc="receipt.company.vat"/>' +
+                                              '\x03' + String.fromCharCode(Number.parseInt((+lengthInUtf8Bytes('<t t-esc="receipt.date.localestring"/>').toString()).toString(16), 16)) + '<t t-esc="receipt.date.localestring"/>' +
+                                              '\x04' + String.fromCharCode(Number.parseInt((+lengthInUtf8Bytes('<t t-esc="widget.format_currency(receipt.total_with_tax)"/>').toString()).toString(16), 16)) + '<t t-esc="widget.format_currency(receipt.total_with_tax)"/>' +
+                                              '\x05' + String.fromCharCode(Number.parseInt((+lengthInUtf8Bytes('<t t-esc="widget.format_currency(receipt.total_tax)"/>').toString()).toString(16), 16)) + '<t t-esc="widget.format_currency(receipt.total_tax)"/>'));
+            </script>
+        </t>
+
+        <t t-jquery="br:last" t-operation="replace"></t>
+        <t t-jquery="br:last" t-operation="replace"></t>
+        <t t-jquery="br:last" t-operation="replace"></t>
+        <t t-jquery="br:last" t-operation="replace"></t>
+        <t t-jquery="br:last" t-operation="replace"></t>
+        <t t-jquery="br:last" t-operation="replace"></t>
+        <t t-jquery="br:last" t-operation="replace"></t>
+        <t t-jquery="br:last" t-operation="replace"></t>
+    </t>
+
+</templates>

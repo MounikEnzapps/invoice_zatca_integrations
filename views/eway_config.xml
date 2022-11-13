@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="zatca_einvoice_configuration_tree" model="ir.ui.view">
+        <field name="name">zatca.einvoice.configuration.tree</field>
+        <field name="model">zatca.einvoice.configuration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="user_name"/>
+                <field name="password"/>
+                <field name="request_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="zatca_einvoice_configuration_forms" model="ir.ui.view">
+        <field name="name">zatca.einvoice.configuration.form</field>
+        <field name="model">zatca.einvoice.configuration</field>
+        <field name="arch" type="xml">
+            <form string="Freight Discount">
+                <sheet>
+                    <group>
+                        <group string="Configuration Details">
+                            <field name="company_id"/>
+<!--                            <field name="request_id"/>-->
+<!--                            <field name="user_name"/>-->
+<!--                            <field name="password"/>-->
+                        </group>
+                        <group>
+                            <field name="reporting_url"/>
+                            <field name="clearance_url"/>
+                            <field name="compliance_url"/>
+<!--                            <field name="compliance_inv_url"/>-->
+<!--                            <field name="production_url"/>-->
+<!--                            <field name="company_id"/>-->
+                        </group>
+                    </group>
+<!--                    <notebook>-->
+<!--                        <page>-->
+<!--                            <group>-->
+<!--                                <field name="certificate"/>-->
+<!--                                <field name="private_key"/>-->
+<!--                                <field name="hash"/>-->
+<!--                            </group>-->
+<!--                        </page>-->
+
+<!--                    </notebook>-->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="actions_zatca_einvoice_configuration" model="ir.actions.act_window">
+        <field name="name">Zatca E-Invoice</field>
+        <field name="res_model">zatca.einvoice.configuration</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new .
+            </p>
+        </field>
+    </record>
+    <menuitem name="Zatca E-Invoice" id="menu_zatca_einvoice"
+              action="actions_zatca_einvoice_configuration" sequence="10"
+              parent="account.menu_finance_receivables"/>
+</odoo>

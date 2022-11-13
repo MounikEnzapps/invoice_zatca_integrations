@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <record id="account_tax_view" model="ir.ui.view">
+            <field name="name">account.tax</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group" position="after">
+                    <group>
+                        <field name="classified_tax_category"/>
+                        <field name="tax_exemption_selection"
+                               attrs="{'required':[('classified_tax_category','in', ['E', 'Z'])],
+                                       'invisible':[('classified_tax_category','not in', ['E', 'Z'])]}"/>
+                        <field name="tax_exemption_code" force_save="1"
+                               attrs="{'invisible':[('classified_tax_category','not in', ['E', 'Z'])]}"/>
+                        <field name="tax_exemption_text" invisible="0" force_save="1"
+                               attrs="{'invisible':[('classified_tax_category','not in', ['E', 'Z'])]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
